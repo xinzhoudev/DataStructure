@@ -29,11 +29,20 @@ public abstract class AbstractHashMap<K,V> extends AbstractMap<K,V> {
         return answer;
     }
 
+
+
+
     // private utilities
     // MAD: Multiply-Add-Divide
     private int hashValue(K key){
         return (int) ((Math.abs(key.hashCode()*scale+shift)%prime)%capacity);
     }
+
+    private int hash(K key){
+        return (int) ((Math.abs(key.hashCode()*scale+shift)%prime)%capacity);
+    }
+
+
     private void resize(int newCap){
         ArrayList<Entry<K,V>> buffer = new ArrayList<>(n);
         for(Entry<K,V> e:entrySet()){

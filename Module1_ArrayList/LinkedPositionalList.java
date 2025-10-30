@@ -3,6 +3,9 @@ package DataStructure.Module1_ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+
+
+// why use the LinkedPositionalist<E>: to prevent users to change the elements of List directly.
 public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
     // nested node class about the position.
     // Private means it cannot be created by other class directly.
@@ -17,6 +20,7 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
             prev = p;
             next = n;
         }
+        // store the E in the Node<E> element, and use getElement() method to fetch E.
         public E getElement() throws IllegalStateException{
             if(next == null) throw new IllegalStateException("Position no longer valid");
             return element;
@@ -37,6 +41,8 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
             next = n;
         }
     }
+    // end the nested class Node.
+
     private class PositionIterator implements Iterator<Position<E>> {
         // first() returns the header of the linkedPositionalList
         private Position<E> cursor = first();
@@ -47,7 +53,9 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
         // next will move cursor to the next position, and return the previous position.
         public Position<E> next() throws NoSuchElementException{
             if(cursor == null) throw new NoSuchElementException("Nothing left");
+            // recent store the previous point.
             recent = cursor;
+            // move the cursor to the next Position<E>
             cursor = after(cursor);
             return recent;
         }
@@ -58,7 +66,7 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
             recent = null;
         }
     }
-    // End of the nested PositionalIterator class;
+    // End of the nested PositionIterator class;
     // Nested PositionIterable class, to iterate LinkedPositionalList
     private class PositionalIterable implements Iterable<Position<E>> {
         public Iterator<Position<E>> iterator() {return new PositionIterator();}
@@ -90,7 +98,9 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
         trailer = new Node<>(null, header, null);
         header.setNext(trailer);
     }
+    // validate the position<E> p and return p as a Node<E>
     private Node<E> validate(Position<E> p) throws IllegalArgumentException{
+        // guarantee that the transformer of Node is safe and correct
         if(!(p instanceof Node)) throw new IllegalArgumentException("Invalid P"); 
         Node<E> node = (Node<E>)p;
         if(node.getNext() == null){
@@ -99,6 +109,7 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
         return node;
     }
 
+    // input node, return the given Node<E> as a position.
     private Position<E> position(Node<E> node){
         if(node == header || node == trailer){
             return null;
@@ -147,6 +158,7 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
         Node<E> node = validate(p);
         return addBetween(e, node, node.getNext());
     }
+    // you should get the address of the specific Node you want, and you can change the element.
     public E set(Position<E> p, E e) throws IllegalArgumentException{
         Node<E> node = validate(p);
         E answer = node.getElement();
@@ -161,11 +173,32 @@ public class LinkedPositionalList<E> implements PositionalList<E>, Iterable<E> {
         pred.setNext(succ);
         succ.setPrev(pred);
         size--;
+        // delete the node and store the prev/next.
         E answer = node.getElement();
         node.setElement(null);
         node.setNext(null);
         node.setPrev(null);
         return answer;
+    }
+
+    public E removeFirst(){
+        return remove(first());
+    }
+
+    public E removeLast(){
+        return remove(last());
+    }
+
+    public E getFirst(){
+        return first().getElement();
+    }
+
+    public E getLast(){
+        return last().getElement();
+    }
+
+    public void add(E e){
+        addLast(e);
     }
 
 

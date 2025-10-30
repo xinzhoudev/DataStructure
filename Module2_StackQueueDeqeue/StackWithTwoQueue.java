@@ -46,5 +46,9 @@ public class StackWithTwoQueue<E> {
         return queueOne.size();
     }
 
+    public boolean isEmpty(){
+        return size() == 0; 
+    }
+
 
 }

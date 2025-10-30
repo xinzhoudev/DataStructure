@@ -24,6 +24,7 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
         }
     }
     // End of nested MapEntry class.
+
     // Support for public keySet method.
     private class KeyIterator implements Iterator<K> {
         private Iterator<Entry<K,V>> entries = entrySet().iterator(); //reuse entrySet.

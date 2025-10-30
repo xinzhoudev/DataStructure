@@ -3,6 +3,7 @@ package DataStructure.Module2_StackQueueDeqeue;
 public class ArrayStack<E> implements Stack<E> {
     public static final int Capacity = 1000;
     private E[] data;
+    // it only has t because the size of the statck is the same as the initial point of it.
     private int t = -1;
     public ArrayStack() {this(Capacity);} 
     public ArrayStack(int Capacity) {
@@ -15,6 +16,7 @@ public class ArrayStack<E> implements Stack<E> {
         return (t == -1);
     }
     public void push(E e) throws IllegalStateException{
+        // it the t+1 will exceed the limit of the array.
         if(size() == data.length){
             resize(this.size()*2);
         }
@@ -24,6 +26,13 @@ public class ArrayStack<E> implements Stack<E> {
         if(isEmpty()) return null;
         return data[t];
     }
+
+    public E top(){
+        if(isEmpty()) return null;
+        return data[t];
+    }
+
+
     public E pop(){
         if(isEmpty()) return null;
         E answer = data[t];

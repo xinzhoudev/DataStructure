@@ -1,7 +1,7 @@
 package DataStructure.Module1_ArrayList;
 
 // Define the list from scratch.
-public interface List<E>{
+public interface List<E> extends Iterable<E>{
     // This is a function that returns the number of elements in the list.
     int size();
     // Judge whether it is empyty or not.
@@ -12,8 +12,10 @@ public interface List<E>{
     E set(int i, E e) throws IndexOutOfBoundsException;
     // add the element in specific position.
     void add(int i, E e) throws IndexOutOfBoundsException;
+    void add(E e) throws IndexOutOfBoundsException;
     // delete the element in spefic position.
     E remove(int i) throws IndexOutOfBoundsException;
+
 }
 
 

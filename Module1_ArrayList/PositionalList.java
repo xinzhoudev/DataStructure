@@ -1,13 +1,17 @@
 package DataStructure.Module1_ArrayList;
 
+// each positionalList stores an element.
 public interface PositionalList<E> {
     int size();
+    boolean isEmpty();
     Position<E> first();
     Position<E> last();
     // Return the position immediately before Position P.
     Position<E> before(Position<E> p) throws IllegalArgumentException;
     // Return the position immediately after Position P.
     Position<E> after(Position<E> p) throws IllegalArgumentException;
+
+    // Updated Methods of a Positional List.
     Position<E> addFirst(E e);
     Position<E> addLast(E e);
     // add element before position p
@@ -17,4 +21,5 @@ public interface PositionalList<E> {
     // set element at P as e;
     E set(Position<E> p, E e) throws IllegalArgumentException;
     E remove(Position<E> p) throws IllegalArgumentException;
+
 }

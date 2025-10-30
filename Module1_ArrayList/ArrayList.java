@@ -1,7 +1,38 @@
 package DataStructure.Module1_ArrayList;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 // This is a class implements the interface List.
-public class ArrayList<E> implements List<E>{
+public class ArrayList<E> implements List<E>, Iterable<E>{
+
+    // nested ArrayIterator class.
+    private class ArrayIterator implements Iterator<E>{
+        private int j = 0;
+        private boolean removable = false;
+        public boolean hasNext(){
+            return j < size;
+        }
+        public E next() throws NoSuchElementException{
+            if(j == size) throw new NoSuchElementException("No next element.");
+            removable = true;
+            return data[j++];
+        }
+
+        public void remove() throws IllegalStateException{
+            if(!removable) throw new IllegalStateException("Nothing to move.");
+            // use the remove method of ArrayList<E>
+            ArrayList.this.remove(j-1);
+            j--;
+            removable = false;
+        }
+        
+    }
+    // The end of the nested class ArrayIterator.
+    public Iterator<E> iterator(){
+        return new ArrayIterator();
+    }
+
     // Instance variables.
     public static final int CAPACITY = 16;
     private E[] data;
@@ -19,6 +50,8 @@ public class ArrayList<E> implements List<E>{
     public boolean isEmpty(){
         return size == 0;
     }
+
+    // to confirm that the index of the int i is valid for the Array.
     protected void checkIndex(int i, int n) throws IndexOutOfBoundsException{
         if(i < 0 || i >= n){
             throw new IndexOutOfBoundsException("Illegal index: " + i);
@@ -56,8 +89,8 @@ public class ArrayList<E> implements List<E>{
         data[i] = e;
         size++;
     }
-
-    public void add(E e){
+    // add the E e to the end of the Array.
+    public void add(E e) throws IndexOutOfBoundsException{
         if(size == data.length){
             resize(2*size);
         }

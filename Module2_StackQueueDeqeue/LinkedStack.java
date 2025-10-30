@@ -1,9 +1,10 @@
 package DataStructure.Module2_StackQueueDeqeue;
+import DataStructure.Module1_ArrayList.LinkedPositionalList;
 
-import java.util.LinkedList;
+
 
 public class LinkedStack<E> implements Stack<E> {
-    private LinkedList<E> list = new LinkedList<>();
+    private LinkedPositionalList<E> list = new LinkedPositionalList<>();
     public LinkedStack(){}
     public int size(){return list.size();} 
     public boolean isEmpty(){return list.isEmpty();}

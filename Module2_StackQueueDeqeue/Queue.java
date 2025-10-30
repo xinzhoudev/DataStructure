@@ -5,7 +5,11 @@ public interface Queue<E> {
     boolean isEmpty();
     // enQueue.
     void enQueue(E e);
+    void offer(E e);
+    E top();
+    E first();
     E peek();
     // deQueue.
     E deQueue(); 
+    E poll();
 }

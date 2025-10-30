@@ -1,6 +1,6 @@
 package DataStructure.Module3_HashTableMap;
 
-public interface Map <K, V>{
+public interface Map <K,V>{
     int size();
     boolean isEmpty();
     V get(K key);

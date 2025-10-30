@@ -4,51 +4,57 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.Iterator;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class M3 {
-    public static void main(String[] args){
-        UnsortedTableMap<Integer, Integer> map = new UnsortedTableMap<>();
-        map.put(1,2);
-        map.put(2,3);
-        map.put(4,10);
-        for(Entry<Integer,Integer> entry:map.entrySet()){
-            System.out.println(entry.getKey() + " " + entry.getValue());
+
+    // task-1: HashTable.java.
+    public static void hashTableTest(String[] s){
+        HashTable set = new HashTable(1009);
+        for(int i = 0; i < s.length; i++){
+            set.insert(s[i]);
         }
-        System.out.println();
-        ChainHashMap<Integer,Integer> chainMap = new ChainHashMap<>();
-        chainMap.put(1, 3); 
-        chainMap.put(2, 3); 
-        chainMap.put(3, 100); 
-        chainMap.put(9, 3);
-        for(Entry<Integer,Integer> entry:chainMap.entrySet()){
-            System.out.println(entry.getKey() + " " + entry.getValue());
-        }
-        ChainHashMap<String,Integer> pap = new ChainHashMap<>();
-        String filePath = "F:\\UCIrvine-MSWE\\Courses\\DataStructure\\Module3_HashTableMap\\pride-and-prejudice.txt";
-        AtomicInteger index = new AtomicInteger(1);
+        // print all of the elements.
+        set.printTable();
+    }
+
+    public static int wordFrequency(String path){
+        HashTable set = new HashTable(1009);
+        String filePath = path;
         try{
             Files.lines(Paths.get(filePath))
-            // .limit(30)
             .forEach(line -> {
-                String[] str = line.split("[ \\n\\t,.:]");
+                String[] str = line.toLowerCase().split("[^a-zA-Z0-9]");
                 // System.out.println(index.getAndIncrement() + ": " + line + " " + Arrays.toString(str));
                 for(String s: str){
-                    pap.put(s, 1);  
+                    // filter the word whose length <= 1;
+                    // capacity = 1009
+                    if(s.length() == 0) continue;
+                    char[] chars = s.toCharArray();
+                    Arrays.sort(chars);
+                    String temp = new String(chars);
+                    if(!set.contains(temp)) set.insert(temp);
                 }
             });
         }catch(IOException e){
             e.printStackTrace();
         }
-        System.out.println(pap.size());
-        // calculate the anagrams of the word;
-        ChainHashMap<String, Integer> wordMap = new ChainHashMap<>();
-        for(Entry<String,Integer> e:pap.entrySet()){
-            char[] chars = e.getKey().toCharArray();
-            Arrays.sort(chars);
-            wordMap.put(new String(chars), 1);
-        }
-        System.out.println(wordMap.size());
+        // System.out.println(set.size());
+        set.printTable();
+        return set.size();
     }
+
+
+    public static void main(String[] args){
+        System.out.println(System.getProperty("user.dir"));
+
+        String[] strs = {"12ufe0w90eu209r", "0", "300", "3", "1","2", "owdjwio", "2901e"};
+        String path = "F:\\UCIrvine-MSWE\\Courses\\DataStructure\\Module3_HashTableMap\\pride-and-prejudice.txt";
+        // String testPath = "F:\\UCIrvine-MSWE\\Courses\\DataStructure\\Module3_HashTableMap\\test.txt";
+        System.out.println(wordFrequency(path));
+        // System.out.println(wordFrequency(testPath));
+        hashTableTest(strs);
+
+    }
+
+
 }

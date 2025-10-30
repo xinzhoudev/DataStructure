@@ -205,7 +205,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
     private void inorderSubtree(Position<E> p, List<Position<E>> snapshot){
         if(left(p) != null){
             inorderSubtree(left(p), snapshot);
-        } 
+        }
         snapshot.add(p);
         if(right(p) != null){
             inorderSubtree(right(p), snapshot);
